@@ -8,7 +8,7 @@ import NewTask from './components/NewTask';
 
 function App() {
   return (
-    <BrowserRouter basename='/ToDo_withReact'>
+    <BrowserRouter basename='/ToDo_withReact' >
       <div className="App">
         <TaskContextProvider>
           <NavBar />
