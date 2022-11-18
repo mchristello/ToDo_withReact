@@ -10,7 +10,7 @@ const Task = () => {
             {tareas.map(tasks => {
                 return (
                     (tasks.estado === true) ? (
-                        <Card className="bg-success text-light" border="light" key={tasks.id} style={{ width: '18rem' }}>
+                        <Card className="bg-success text-light task_card" border="light" key={tasks.id} style={{ width: '18rem' }}>
                             <Card.Body>
                                 <Card.Title as='h3'>{tasks.title}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-info">{tasks.expected}</Card.Subtitle>
@@ -24,7 +24,7 @@ const Task = () => {
                             </Card.Body>
                         </Card>
                     ) : (
-                        <Card border="warning" key={tasks.id} style={{ width: '18rem' }}>
+                        <Card className="task_card" border="warning" key={tasks.id} style={{ width: '18rem' }}>
                             <Card.Body>
                                 <Card.Title as='h3'>{tasks.title}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">{tasks.expected}</Card.Subtitle>
