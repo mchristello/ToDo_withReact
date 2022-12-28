@@ -18,6 +18,7 @@
         - 'SweetAlert'
         - 'UUID'
         - 'React Router DOM'
+        - 'Firebase Authentication'
 
 --------------------------------
 
