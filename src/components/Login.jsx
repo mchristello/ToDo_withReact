@@ -44,7 +44,7 @@ const LogIn = () => {
                                 <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange} />
                             </FloatingLabel>
                         </Form.Group>
-                        <Button variant="success" type="submit" onClick={(evt) => {handleSubmit(evt)}}>
+                        <Button className="login_btn mt-5" variant="success" type="submit" onClick={(evt) => {handleSubmit(evt)}}>
                             LogIn
                         </Button>
                     </Form>

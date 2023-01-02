@@ -5,11 +5,12 @@ import { UserContext } from "../context/userContext";
 
 const UserAccount = () => {
 
-    const { userState } = useContext(UserContext);
+    const { userState, logOut } = useContext(UserContext);
+
 
     return (
         <Container>
-            <h2>My Account</h2>
+            <h2 className="mt-5">My Account</h2>
             {userState ? (
                 <Card style={{ width: '18rem' }}>
                     <Card.Img variant="top" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" />
@@ -21,21 +22,21 @@ const UserAccount = () => {
                     </Card.Body>
                     <ListGroup className="list-group-flush">
                         <ListGroup.Item>
-                            <Card.Link href="#">My Task List</Card.Link>
+                            <Card.Link as={Link}to='/'>My Task List</Card.Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
-                        <Card.Link href="#">Set a new Task</Card.Link>
+                        <Card.Link as={Link}to='/NewTask' >Set a new Task</Card.Link>
                         </ListGroup.Item>
                     </ListGroup>
                     <Card.Body>
-                        <Card.Link href="#">Log Out</Card.Link> 
+                        <Card.Link as={Link}to='/' onClick={ logOut } >Log Out</Card.Link> 
                     </Card.Body>
                 </Card>
             ) : 
             (
                 <div>
-                    <h3>LogIn to chek your ToDos!</h3>
-                    <Button as={Link}to='/logIn'>LogIn</Button>
+                    <h3 className="mt-5">LogIn to chek your ToDos!</h3>
+                    <Button as={Link}to='/logIn' className="login_btn mt-5" variant="success">LogIn</Button>
                 </div>
             )}
         </Container>

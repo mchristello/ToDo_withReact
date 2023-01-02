@@ -4,11 +4,11 @@ import { FcTodoList } from "react-icons/fc";
 import { FiLogIn, FiLogOut, FiEdit, FiUserCheck } from 'react-icons/fi';
 import { useTaskContext } from "../context/taskContext";
 import { UserContext } from "../context/userContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const NavBar = () => {
 
-    const { pendientes } = useTaskContext();
+    const { pendientes, tareas } = useTaskContext();
     const { userState, logOut } = useContext(UserContext);
 
     return (
@@ -21,17 +21,17 @@ const NavBar = () => {
                     <Navbar.Toggle className="mx-5 mx-5" aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="align-items-center">
-                            <Nav.Link as={Link}to='/'>Home</Nav.Link>
-                            <Nav.Link as={Link}to="/newTask">New Task</Nav.Link>
+                            <Nav.Link as={Link}to='/' className="me-5">Home</Nav.Link>
+                            <Nav.Link as={Link}to="/newTask" className="me-5">New Task</Nav.Link>
                             {userState ? (
                                 <div className='account_menu'>
-                                    <Nav.Link as={Link}to="/userAccount">Mi Cuenta | <FiUserCheck /></Nav.Link>
-                                    <Nav.Link as={Link}to='/logIn' variant='light' onClick={ logOut }>LogOut | <FiLogOut /></Nav.Link>
+                                    <Nav.Link as={Link}to="/userAccount" className="me-5">Mi Cuenta | <FiUserCheck /></Nav.Link>
+                                    <Nav.Link as={Link}to='/logIn' variant='light' onClick={ logOut } className="me-5">LogOut | <FiLogOut /></Nav.Link>
                                 </div>
                             ) : (
                                 <div className='account_menu'>
-                                    <Nav.Link as={Link}to="/logIn">Login <FiLogIn /></Nav.Link>
-                                    <Nav.Link as={Link}to="/newUser">Register <FiEdit /></Nav.Link>
+                                    <Nav.Link as={Link}to="/logIn" className="me-5">Login <FiLogIn /></Nav.Link>
+                                    <Nav.Link as={Link}to="/newUser" className="me-5">Register <FiEdit /></Nav.Link>
                                 </div>
                             )}
                         </Nav>
@@ -40,11 +40,17 @@ const NavBar = () => {
                     <Container>
                         Pending
                         <FcTodoList />
-                        <Badge className="m-2" pill bg="primary">
-                                {pendientes() > 0 &&
-                                    pendientes()
-                                }
-                        </Badge>
+                        {userState ? (
+                            <Badge className="m-2" pill bg="primary">
+                                    {pendientes(userState) >= 0 &&
+                                        pendientes(userState)
+                                    }
+                            </Badge>
+                        ) : (
+                            <Badge className="m-2" pill bg="primary">
+                                    0
+                            </Badge>
+                        )}
                     </Container>
             </Container>
         </Navbar>

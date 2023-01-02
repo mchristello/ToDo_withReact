@@ -1,8 +1,8 @@
-import { createContext, useContext } from "react";
 import React from 'react';
+import { createContext, useContext } from "react";
+import { useLocalStorage } from "../utils/localStorage";
 import Swal from "sweetalert2";
 import uuid from "react-uuid";
-import { useLocalStorage } from "../utils/localStorage";
 
 
 const TaskContext = createContext([]);
@@ -19,24 +19,28 @@ export const TaskContextProvider = ({ children }) => {
         return tareas.some((buscada) => buscada.title === tarea.title);
     };
 
-    const agregarTarea = (tarea) => {
+    const agregarTarea = (tarea, email) => {
         if (existe(tarea)) {
-        return Swal.fire({
-            title: 'La tarea ya existe en la lista',
-            icon: 'warning',
-            showCloseButton: true,
-            confirmButtonText: 'Ok'
-        });
+            return Swal.fire({
+                title: 'La tarea ya existe en la lista',
+                icon: 'warning',
+                showCloseButton: true,
+                confirmButtonText: 'Ok'
+            });
         }
+
         const id = uuid();
-        const nuevaTarea = { ...tarea, id };
+        const nuevaTarea = { ...tarea, id, email };
+
         setTareas([...tareas, nuevaTarea]);
-        Swal.fire({
-            title: 'Tarea agregada',
-            icon: 'success',
-            showCloseButton: true,
-            confirmButtonText: 'Ok'
-        });
+        console.log(nuevaTarea);
+
+        return Swal.fire({
+                title: 'Tarea agregada',
+                icon: 'success',
+                showCloseButton: true,
+                confirmButtonText: 'Ok'
+            });
     };
 
     const removerTarea = (tarea) => {
@@ -48,8 +52,9 @@ export const TaskContextProvider = ({ children }) => {
         setTareas([]);
     };
 
-    const pendientes = () => {
-        const pendientes = tareas.reduce(
+    const pendientes = (user) => {
+        const wantedTasks = tareas.filter(t => t.email === user.email)
+        const pendientes = wantedTasks.reduce(
         (acum, tarea) => (tarea.estado === false ? acum + 1 : acum),
         0
         );
@@ -67,6 +72,7 @@ export const TaskContextProvider = ({ children }) => {
         });
         setTareas(actualizarTarea);
     };
+
 
     return (
         <TaskContext.Provider
